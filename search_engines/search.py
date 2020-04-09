@@ -23,13 +23,21 @@ sources = {
     'yahoo': yahoo_search
 }
 
-async def search(source: str, query: str, max_pages: int = 1000,
-                 page_min_sleep: int = 0, page_max_sleep: int = 0) -> List[Dict[str,str]]:
+
+async def search(source: str,
+                 query: str,
+                 max_pages: int = 1000,
+                 page_min_sleep: int = 0,
+                 page_max_sleep: int = 0) -> List[Dict[str, str]]:
     module = sources.get(source.lower())
     if not module:
-        raise ValueError(f"Invaid source: {source}. Valid source are: {', '.join([sources.keys()])}")
+        raise ValueError(
+            f"Invaid source: {source}. Valid source are: {', '.join([sources.keys()])}"
+        )
     async with ClientSession() as client:
-        return await module.do_search(client=client, query=query,
-                                        headers=headers, max_pages=max_pages,
-                                        page_min_sleep=page_min_sleep,
-                                        page_max_sleep=page_max_sleep)
+        return await module.do_search(client=client,
+                                      query=query,
+                                      headers=headers,
+                                      max_pages=max_pages,
+                                      page_min_sleep=page_min_sleep,
+                                      page_max_sleep=page_max_sleep)
