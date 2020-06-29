@@ -1,0 +1,2 @@
+aiohttp
+pyppeteer_spider
