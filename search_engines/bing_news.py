@@ -1,6 +1,7 @@
-from search_all.utils import extract_first, join_all, encode_url_str, logger, publish_date_from_time
+from search_engines.utils import extract_first, join_all, publish_date_from_time
 from lxml.html import fromstring
 from typing import Dict, List, Tuple
+from urllib.parse import quote
 import re
 
 
@@ -25,11 +26,11 @@ async def extract_search_results(html: str, search_url: str) -> Tuple[List[Dict[
     next_page_url = extract_first(root.xpath("//a[@title='Next page']/@href"))
     if next_page_url:
         next_page_url = 'https://www.bing.com' + next_page_url
-        logger.info(f"Extracted next page url: {next_page_url}")
+        print(f"Extracted next page url: {next_page_url}")
     else:
-        logger.info(f"No next page url found: {search_url}")
+        print(f"No next page url found: {search_url}")
     return results, next_page_url
 
 
 def search_url(query: str):
-    return 'https://www.bing.com/news/search?q=' + encode_url_str(query)
+    return f'https://www.bing.com/news/search?q={quote(query)}'

@@ -1,4 +1,4 @@
-from search_all.utils import extract_first, join_all, logger, publish_date_from_time
+from search_engines.utils import extract_first, join_all, publish_date_from_time
 from lxml.html import fromstring
 
 from typing import Dict, List, Tuple
@@ -21,13 +21,13 @@ async def extract_search_results(html: str, search_url: str) -> Tuple[List[Dict[
                 'search_url': search_url,
                 'page_number': page_number,
             })
-    logger.info(
+    print(
         f"Extracted {len(results)} results from page {page_number}.")
     next_page_url = extract_first(root.xpath("//*[@class='next']/@href"))
     if next_page_url:
-        logger.info(f"Extracted next page url: {next_page_url}")
+        print(f"Extracted next page url: {next_page_url}")
     else:
-        logger.info(f"No next page url found: {search_url}")
+        print(f"No next page url found: {search_url}")
     return results, next_page_url
 
 
