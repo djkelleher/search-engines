@@ -16,7 +16,7 @@ from search_engines import (ask_search,
                             yahoo_search)
 
 modules = {
-    # 'ask_search': ask_search,
+    'ask_search': ask_search,
     # 'bing_news': bing_news,
     # 'bing_search': bing_search,
     # 'dogpile_search': dogpile_search,

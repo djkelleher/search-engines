@@ -13,7 +13,7 @@ def extract_search_results(html: str) -> Tuple[List[Dict[str, str]], str]:
         {
             'url': extract_first(result.xpath("./h2/a/@href")),
             'title': join_all(result.xpath("./h2/a//text()")),
-            'preview_text': join_all(result.xpath(".//div[@class='b_caption']")),
+            'preview_text': join_all(result.xpath(".//div[@class='b_caption']/p//text()")),
             'page_number': page_number,
         } for result in root.xpath("//*[@class='b_algo']")]
     print(
