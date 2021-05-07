@@ -4,11 +4,11 @@ from pathlib import Path
 
 setuptools.setup(
     name="search_engines",
-    version="1.0.1",
+    version="1.0.2",
     author="Dan Kelleher",
-    author_email="danielkelleher@protonmail.com",
+    author_email="kelleherjdan@gmail.com",
     maintainer='Dan Kelleher',
-    maintainer_email='danielkelleher@protonmail.com',
+    maintainer_email='kelleherjdan@gmail.com',
     description="Query and scrape search engines.",
     packages=["search_engines"],
     url="https://github.com/djkelleher/search_engines",
@@ -20,5 +20,8 @@ setuptools.setup(
     ],
     install_requires=[
         'lxml',
-    ]
+    ],
+    extras_require={
+        'test': ['pyppeteer'],
+    },
 )
