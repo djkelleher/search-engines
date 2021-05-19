@@ -36,3 +36,6 @@ If we want to scrape multiple pages, we can load the next page using the returne
 ```python
 results, next_page_url = bing_search.extract_search_results(html, url)
 ```
+
+## Contributions
+Add new search engines! =)   
