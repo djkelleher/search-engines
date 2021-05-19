@@ -5,7 +5,7 @@ from typing import Dict, List, Tuple
 from urllib.parse import quote
 
 
-def extract_search_results(html: str) -> Tuple[List[Dict[str, str]], str]:
+def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str]], str]:
     root = fromstring(html)
     page_number = extract_first(root.xpath(
         '//span[@class="pagination__num pagination__num--active"]/text()'))
@@ -31,5 +31,5 @@ def extract_search_results(html: str) -> Tuple[List[Dict[str, str]], str]:
     return results, next_page_url
 
 
-def get_search_url(query: str):
-    f'https://www.dogpile.com/serp?qc=news&q={quote(query)}'
+def get_search_url(query: str, latest: bool, country: str):
+    return f'https://www.dogpile.com/serp?qc=news&q={quote(query)}'

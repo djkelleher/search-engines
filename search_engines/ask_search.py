@@ -5,7 +5,7 @@ from typing import Dict, List, Tuple
 from urllib.parse import quote
 
 
-def extract_search_results(html: str) -> Tuple[List[Dict[str, str]], str]:
+def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str]], str]:
     root = fromstring(html)
     page_number = extract_first(root.xpath(
         '//li[@class="PartialWebPagination-condensed PartialWebPagination-pgsel PartialWebPagination-button"]/text()'))
@@ -23,5 +23,5 @@ def extract_search_results(html: str) -> Tuple[List[Dict[str, str]], str]:
     return results, next_page_url
 
 
-def get_search_url(query: str):
+def get_search_url(query: str, latest: bool, country: str):
     return f'https://www.ask.com/web?q={quote(query)}'

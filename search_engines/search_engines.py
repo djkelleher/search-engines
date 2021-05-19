@@ -61,7 +61,9 @@ async def _start_search(task_data: Dict[str, Any]) -> None:
     await task_queue.put({**task_data,
                           'module': 'crawler_cluster.search_engines',
                           'function': 'search',
-                          'url': module.get_search_url(task_data['query']),
+                          'url': module.get_search_url(query=task_data['query'],
+                                                       country=task_data['country'],
+                                                       latest=task_data['latest']),
                           'page_number': 1,
                           })
 
@@ -92,7 +94,7 @@ async def _scrape_page(task_data: Dict[str, Any], task_queue: TaskQueue, loader:
     module = _get_engine_module(task_data['engine'])
     # load page.
     await loader.fetch(task_data['url'])
-    results, next_page_url = module.extract_search_results(loader.html)
+    results, next_page_url = module.extract_search_results(html=loader.html, page_url=task_data['url'])
     # results is a list of Dict[str,str]
     # add results to this tasks result list.
     await task_queue.redis.lpush(_search_results_key(task_data['task_id']), pickle.dumps(results))

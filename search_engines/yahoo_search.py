@@ -5,7 +5,7 @@ from typing import Dict, List, Tuple
 from urllib.parse import quote
 
 
-def extract_search_results(html: str) -> Tuple[List[Dict[str, str]], str]:
+def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str]], str]:
     root = fromstring(html)
     page_number = extract_first(root.xpath(
         '//div[@class="compPagination"]//strong/text()'))
@@ -17,12 +17,13 @@ def extract_search_results(html: str) -> Tuple[List[Dict[str, str]], str]:
             results.append({
                 'url': url,
                 'title': join_all(result.xpath(".//h3[contains(@class,'title')]//a//text()")),
-                'preview_text': join_all(result.xpath(".//div[@class='compText aAbs']//text()")),
+                'preview_text': join_all(result.xpath(".//span[@class=' fc-falcon']//text()")),
                 'page_number': page_number,
             })
     next_page_url = extract_first(root.xpath("//*[@class='next']/@href"))
     return results, next_page_url
 
 
-def get_search_url(query: str):
-    return f'https://search.yahoo.com/search?p={quote(query)}'
+def get_search_url(query: str, latest: bool, country: str):
+    url_country = (country.lower() + ".") if country.lower() != "us" and len(country) > 0 else ""
+    return f'https://{url_country}search.yahoo.com/search?p={quote(query)}'
