@@ -92,7 +92,7 @@ async def _scrape_page(task_data: Dict[str, Any], task_queue: TaskQueue, loader:
     module = _get_engine_module(task_data['engine'])
     # load page.
     await loader.fetch(task_data['url'])
-    results, next_page_url = module.extract_search_results(loader.html)
+    results, next_page_url = module.extract_search_results(loader.html, task_data['url'])
     # results is a list of Dict[str,str]
     # add results to this tasks result list.
     await task_queue.redis.lpush(_search_results_key(task_data['task_id']), pickle.dumps(results))
