@@ -1,4 +1,4 @@
-from search_engines.utils import extract_first, join_all, publish_time
+from search_engines.utils import extract_first, join_all
 from lxml.html import fromstring
 
 from typing import Dict, List, Tuple
@@ -25,5 +25,6 @@ def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str
 
 
 def get_search_url(query: str, latest: bool, country: str):
-    url_country = (country.lower() + ".") if country.lower() != "us" and len(country) > 0 else ""
+    url_country = (country.lower() +
+                   ".") if country.lower() != "us" and len(country) > 0 else ""
     return f'https://{url_country}search.yahoo.com/search?p={quote(query)}'
