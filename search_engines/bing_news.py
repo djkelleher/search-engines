@@ -30,7 +30,7 @@ def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str
     return results, next_page_url
 
 
-def get_search_url(query: str, latest: bool, country: str):
+def get_search_url(query: str, latest: bool = True, country: str = 'us') -> str:
     url = f'https://www.bing.com/news/infinitescrollajax?q={quote(query)}&InfiniteScroll=1&first=1'
     if latest:
         url += "&qft=sortbydate" + quote('="1"')

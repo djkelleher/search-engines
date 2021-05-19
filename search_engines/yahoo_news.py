@@ -23,7 +23,7 @@ def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str
     return results, next_page_url
 
 
-def get_search_url(query: str, latest: bool, country: str):
+def get_search_url(query: str, latest: bool = True, country: str = 'us') -> str:
     url_country = (country.lower() +
                    ".") if country.lower() != "us" and len(country) > 0 else ""
     # &fr=uh3_news_vert_gs'

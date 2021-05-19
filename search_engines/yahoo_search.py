@@ -24,7 +24,7 @@ def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str
     return results, next_page_url
 
 
-def get_search_url(query: str, latest: bool, country: str):
-    url_country = (country.lower() +
-                   ".") if country.lower() != "us" and len(country) > 0 else ""
+def get_search_url(query: str, latest: bool = True, country: str = 'us') -> str:
+    url_country = f'{country.lower()}.' if country and country.lower(
+    ) != 'us' else ''
     return f'https://{url_country}search.yahoo.com/search?p={quote(query)}'
