@@ -18,9 +18,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=[
-        'lxml',
-    ],
+    install_requires=Path('requirements.txt').read_text().splitlines(),
     extras_require={
         'test': ['pyppeteer'],
     },

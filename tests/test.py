@@ -17,13 +17,13 @@ from search_engines import (ask_search,
 
 modules = {
     'ask_search': ask_search,
-    # 'bing_news': bing_news,
-    # 'bing_search': bing_search,
-    # 'dogpile_search': dogpile_search,
-    # 'google_news': google_news,
-    # 'google_search': google_search,
-    # 'yahoo_news': yahoo_news,
-    # 'yahoo_search': yahoo_search,
+    'bing_news': bing_news,
+    'bing_search': bing_search,
+    'dogpile_search': dogpile_search,
+    'google_news': google_news,
+    'google_search': google_search,
+    'yahoo_news': yahoo_news,
+    'yahoo_search': yahoo_search,
 }
 
 
@@ -70,18 +70,22 @@ async def test_search(query):
         for i in range(4):
             await page.goto(url)
             html = await page.content()
-            results, url = module.extract_search_results(html=html, page_url=url)
+            results, url = module.extract_search_results(
+                html=html, page_url=url)
             print(f"{name} page {i}:\n{pformat(results)}")
             print(f"Next page URL: {url}")
             all_results.append(results)
             await asyncio.sleep(2)
-        Path(
-            f'results/{name}.json').write_text(json.dumps(all_results, indent=4))
+        results_dir.joinpath(f'{name}.json').write_text(
+            json.dumps(all_results, indent=4))
     await browser.close()
 
 
 if __name__ == '__main__':
     import sys
+
+    results_dir = Path(__file__).parent / "search_results"
+    results_dir.mkdir(exist_ok=True)
 
     query = sys.argv[1] if len(sys.argv) > 1 else "Tesla TSLA"
     print(f"Query: {query}")

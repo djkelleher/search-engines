@@ -24,7 +24,8 @@ def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str
             'page_number': current_page,
         })
 
-    next_page_url = f'https://www.bing.com/news/infinitescrollajax?q={quote(params["q"][0])}&InfiniteScroll=1&first=' + str(int(params["first"][0]) + 10)
+    next_page_url = f'https://www.bing.com/news/infinitescrollajax?q={quote(params["q"][0])}&InfiniteScroll=1&first=' + str(
+        int(params["first"][0]) + 10)
 
     return results, next_page_url
 

@@ -17,7 +17,7 @@ def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str
             results.append({
                 'url': url,
                 'title': join_all(result.xpath(".//h3[contains(@class,'title')]//a//text()")),
-                'preview_text': join_all(result.xpath(".//span[@class=' fc-falcon']//text()")),
+                'preview_text':  join_all(result.xpath(".//div[@class='compText aAbs']//text()")) or join_all(result.xpath(".//span[@class=' fc-falcon']//text()")),
                 'page_number': page_number,
             })
     next_page_url = extract_first(root.xpath("//*[@class='next']/@href"))
