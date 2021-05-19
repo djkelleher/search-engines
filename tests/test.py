@@ -20,6 +20,7 @@ modules = {
     'bing_news': bing_news,
     'bing_search': bing_search,
     'dogpile_search': dogpile_search,
+    'dogpile_news': dogpile_news,
     'google_news': google_news,
     'google_search': google_search,
     'yahoo_news': yahoo_news,
@@ -58,6 +59,18 @@ async def open_browser():
         webgl_vendor="Intel Inc.",
         renderer="Intel Iris OpenGL Engine",
     )
+    await page._client.send('Network.setBlockedURLs', {'urls': [
+        "adssettings.google.com",
+        "doubleclick.net",
+        "googlesyndication.com",
+        "google.com/ads",
+        "securepubads.g.doubleclick.net",
+        "ads.pubmatic.com",
+        "adservice.google.com",
+        "amazon-adsystem.com"
+        "google-analytics.com"
+        "googletagmanager.com"
+    ]})
     return browser, page
 
 
