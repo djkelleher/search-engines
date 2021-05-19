@@ -1,7 +1,7 @@
 from search_engines.utils import extract_first, join_all, publish_time
 from lxml.html import fromstring
 
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Any
 from urllib.parse import quote
 
 
@@ -24,6 +24,10 @@ def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str
     return results, next_page_url
 
 
-def get_search_url(query: str):
-    return f'https://www.google.com/search?q={quote(query)}&tbm=nws'
+def get_search_url(query: str, latest: bool, country: str):
+    url = f'https://www.google.com/search?q={quote(query)}&tbm=nws'
+    if latest:
+        url += "&tbs=sbd:1"
+
+    return url
     # return f'https://www.google.com/search?q={quote(query)}&sxsrf=ALeKk02Xj0vvvwQayorVgMTEjV8IHSgj4w:1586286484301&source=lnms&tbm=nws&sa=X&ved=2ahUKEwj_mKLTgdfoAhV3knIEHWi0A8IQ_AUoAXoECBkQAw&biw=1359&bih=981'

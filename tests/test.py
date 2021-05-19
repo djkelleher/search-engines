@@ -65,12 +65,12 @@ async def test_search(query):
     browser, page = await open_browser()
     for name, module in modules.items():
         print(f"Starting {name}")
-        url = module.get_search_url(query)
+        url = module.get_search_url(query=query, latest=True, country='US')
         all_results = []
         for i in range(4):
             await page.goto(url)
             html = await page.content()
-            results, url = module.extract_search_results(html)
+            results, url = module.extract_search_results(html=html, page_url=url)
             print(f"{name} page {i}:\n{pformat(results)}")
             print(f"Next page URL: {url}")
             all_results.append(results)

@@ -13,14 +13,19 @@ def extract_search_results(html: str, page_url: str) -> Tuple[List[Dict[str, str
         {
             'url': extract_first(result.xpath('.//a[@title]/@href')),
             'title': extract_first(result.xpath('.//a[@title]/@title')),
-            'preview_text': join_all(result.xpath("//div[@class='compText aAbs']//text()")),
+            'preview_text': join_all(result.xpath(".//p[@class='s-desc']//text()")),
             'publisher': extract_first(result.xpath('.//span[contains(@class,"mr-5 cite-co")]/text()')),
             'publish_date': publish_time(extract_first(result.xpath('.//span[contains(@class,"s-time")]/text()'))),
             'page_number': page_number,
         } for result in root.xpath('//ol[contains(@class,"searchCenterMiddle")]/li')]
     next_page_url = extract_first(root.xpath('//a[@class="next"]/@href'))
+
     return results, next_page_url
 
 
-def get_search_url(query: str):
-    return f'https://news.search.yahoo.com/search?p={quote(query)}&fr=uh3_news_vert_gs'
+def get_search_url(query: str, latest: bool, country: str):
+    url_country = (country.lower() + ".") if country.lower() != "us" and len(country) > 0 else ""
+    url = f'https://{url_country}news.search.yahoo.com/search?p={quote(query)}&fr=uh3_news_vert_gs'
+    if latest:
+        url += "&fr2=sortBy&context=" + quote("gsmcontext::sort::time")
+    return url
