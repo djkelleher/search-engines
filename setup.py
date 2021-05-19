@@ -4,7 +4,7 @@ from pathlib import Path
 
 setuptools.setup(
     name="search_engines",
-    version="1.0.2",
+    version="1.0.5",
     author="Dan Kelleher",
     author_email="kelleherjdan@gmail.com",
     maintainer='Dan Kelleher',
