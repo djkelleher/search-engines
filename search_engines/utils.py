@@ -16,6 +16,9 @@ def join_all(query_result, join_str=" "):
 
 def publish_time(time_text: str):
     """Convert published time text like "2 hours ago" to a timestamp"""
+
+    time_text = re.sub(r"(mins)|(secs)", lambda x: "minutes" if x.group() == "mins" else "seconds", time_text)
+
     match = re.search(
         r'(?i)(\d+)\s*(week|day|hour|minute|second)s?', time_text)
     if match:
