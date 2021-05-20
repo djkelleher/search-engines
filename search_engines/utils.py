@@ -1,4 +1,6 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+from dateutil.parser import parse
 import re
 
 
@@ -17,10 +19,11 @@ def join_all(query_result, join_str=" "):
 def publish_time(time_text: str):
     """Convert published time text like "2 hours ago" to a timestamp"""
 
-    time_text = re.sub(r"(mins)|(secs)", lambda x: "minutes" if x.group() == "mins" else "seconds", time_text)
-
-    match = re.search(
-        r'(?i)(\d+)\s*(week|day|hour|minute|second)s?', time_text)
+    match = re.search(r'(?i)(\d+)\s*(year|month|week|day|hour|minute|second|min|sec)s?', time_text)
     if match:
-        td = timedelta(**{f'{match.group(2).lower()}s': int(match.group(1))})
-        return (datetime.now() - td).strftime('%Y-%m-%d %H:%M:%S')
+        value, unit = re.search(r'(\d+) (\w+) ago', time_text).groups()
+        if not unit.endswith('s'): unit += 's'
+        delta = relativedelta(**{unit: int(value)})
+        return (datetime.now() - delta).strftime('%Y-%m-%d %H:%M:%S')
+    else:
+        return parse(time_text, fuzzy=True).strftime('%Y-%m-%d %H:%M:%S')
