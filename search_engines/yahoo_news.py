@@ -28,6 +28,7 @@ def get_search_url(query: str, latest: bool = True, country: str = 'us') -> str:
                    ".") if country.lower() != "us" and len(country) > 0 else ""
     # &fr=uh3_news_vert_gs'
     url = f'https://{url_country}news.search.yahoo.com/search?p={quote(query)}'
-    # if latest:
-    #url += "&fr2=sortBy&context=" + quote("gsmcontext::sort::time")
+    if latest and country != 'us':
+        url += "&fr2=sortBy&context=" + quote("gsmcontext::sort::time")
+
     return url

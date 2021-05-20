@@ -1,7 +1,7 @@
 from search_engines.utils import extract_first, join_all
 from lxml.html import fromstring
 
-from typing import Dict, List, Tuple, Any
+from typing import Dict, List, Tuple
 from urllib.parse import quote
 
 
