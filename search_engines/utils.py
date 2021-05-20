@@ -23,11 +23,8 @@ def publish_time(time_text: str):
     if match:
         # time unit: time value
         kwargs = {f'{match.group(2).lower()}s': int(match.group(1))}
-        delta = relativedelta(**kwargs)
-    else:
-        try:
-            delta = parse(time_text, fuzzy=True)
-        except ParserError as e:
-            print(f"Could not parse publish time: {time_text}")
-            return
-    return (datetime.now() - delta).strftime('%Y-%m-%d %H:%M:%S')
+        return (datetime.now() - relativedelta(**kwargs)).strftime('%Y-%m-%d %H:%M:%S')
+    try:
+        return parse(time_text, fuzzy=True).strftime('%Y-%m-%d %H:%M:%S')
+    except ParserError:
+        print(f"Could not parse publish time: {time_text}")
