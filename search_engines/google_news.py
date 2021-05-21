@@ -1,7 +1,7 @@
 from search_engines.utils import extract_first, join_all, publish_time
 from lxml.html import fromstring
 
-from typing import Dict, List, Tuple, Any
+from typing import Dict, List, Tuple
 from urllib.parse import quote
 
 
@@ -30,4 +30,3 @@ def get_search_url(query: str, latest: bool = True, country: str = 'us') -> str:
         url += "&tbs=sbd:1"
 
     return url
-    # return f'https://www.google.com/search?q={quote(query)}&sxsrf=ALeKk02Xj0vvvwQayorVgMTEjV8IHSgj4w:1586286484301&source=lnms&tbm=nws&sa=X&ved=2ahUKEwj_mKLTgdfoAhV3knIEHWi0A8IQ_AUoAXoECBkQAw&biw=1359&bih=981'
