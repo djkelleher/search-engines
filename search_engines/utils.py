@@ -18,8 +18,11 @@ def join_all(query_result, join_str=" "):
 
 def publish_time(time_text: str):
     """Convert published time text like "2 hours ago" to a timestamp"""
+
+    time_text = re.sub(r"(mins)|(secs)", lambda x: "minutes" if x.group() == "mins" else "seconds", time_text)
+
     match = re.search(
-        r'(?i)(\d+)\s*(year|month|week|day|hour|minute|second|min|sec)s?', time_text)
+        r'(?i)(\d+)\s*(year|month|week|day|hour|minute|second)s?', time_text)
     if match:
         # time unit: time value
         kwargs = {f'{match.group(2).lower()}s': int(match.group(1))}
