@@ -13,21 +13,30 @@ def extract_all(query_result):
 
 
 def join_all(query_result, join_str=" "):
-    return join_str.join([str(t).strip() for t in query_result]) if len(query_result) else ""
+    return (
+        join_str.join([str(t).strip() for t in query_result])
+        if len(query_result)
+        else ""
+    )
 
 
 def publish_time(time_text: str):
     """Convert published time text like "2 hours ago" to a timestamp"""
 
-    time_text = re.sub(r"(mins)|(secs)", lambda x: "minutes" if x.group() == "mins" else "seconds", time_text)
+    time_text = re.sub(
+        r"(mins)|(secs)",
+        lambda x: "minutes" if x.group() == "mins" else "seconds",
+        time_text,
+    )
 
     match = re.search(
-        r'(?i)(\d+)\s*(year|month|week|day|hour|minute|second)s?', time_text)
+        r"(?i)(\d+)\s*(year|month|week|day|hour|minute|second)s?", time_text
+    )
     if match:
         # time unit: time value
-        kwargs = {f'{match.group(2).lower()}s': int(match.group(1))}
-        return (datetime.now() - relativedelta(**kwargs)).strftime('%Y-%m-%d %H:%M:%S')
+        kwargs = {f"{match.group(2).lower()}s": int(match.group(1))}
+        return (datetime.now() - relativedelta(**kwargs)).strftime("%Y-%m-%d %H:%M:%S")
     try:
-        return parse(time_text, fuzzy=True).strftime('%Y-%m-%d %H:%M:%S')
+        return parse(time_text, fuzzy=True).strftime("%Y-%m-%d %H:%M:%S")
     except ParserError:
         print(f"Could not parse publish time: {time_text}")
