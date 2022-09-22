@@ -38,4 +38,4 @@ results, next_page_url = bing_search.extract_search_results(html, url)
 ```
 
 ## Contributions
-Add new search engines! =)   
+Add new search engines!   
