@@ -5,7 +5,7 @@ description = "Query and scrape search engines."
 authors = ["Dan Kelleher <kelleherjdan@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.8.1"
 lxml = "^4.9.1"
 
 [tool.poetry.dev-dependencies]
