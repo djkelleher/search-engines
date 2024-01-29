@@ -37,5 +37,18 @@ If we want to scrape multiple pages, we can load the next page using the returne
 results, next_page_url = bing_search.extract_search_results(html, url)
 ```
 
+Putting that all together, here's how we would scrape all pages of search results:    
+```python
+url = bing_search.get_search_url('Tesla TSLA')
+while True:
+    html = requests.get(url).text
+    results, next_page_url = bing_search.extract_search_results(html, url)
+    # do something wih results...
+    if next_page_url:
+        url = next_page_url
+    else:
+        break
+```
+
 ## Contributions
 Add new search engines!   
